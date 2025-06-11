@@ -93,3 +93,29 @@ while running:
 
 # Quit Pygame
 pygame.quit()
+
+
+##class Caixa:
+ #   def __init__(self, largura=None, altura=None, cor=None, texto=None, arredondamento=None, x=None, y=None):
+  #      self.largura = largura
+   #     self.altura = altura
+    #    self.cor = cor
+     #   self.texto = texto
+      #  self.arredondamento = arredondamento
+       # self.x = x
+        # self.y = y
+
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# ...

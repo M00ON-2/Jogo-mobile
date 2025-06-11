@@ -1,9 +1,9 @@
 import pygame
 
-# Initialize Pygame
+# Iniciar
 pygame.init()
 
-# Screen dimensions
+# Dimensões
 width = 720
 height = 1280
 screen = pygame.display.set_mode((width, height))
@@ -13,7 +13,7 @@ white = (255, 255, 255)
 light_gray = (10,12,13)
 dark_gray = (80, 80, 80)
 
-# Box properties
+# Propriedades caixa
 box_x = 20
 box_y = 100
 box_width = 680
@@ -21,23 +21,23 @@ box_height = 50
 box_color = light_gray
 opacity = 0.7
 
-# Rounded corners
+# Arredondamento da caixa
 border_radius = 15  
 shadow_offset = 5
 shadow_color = dark_gray
 
-# Text properties
+# Propriedades do texto
 font_size = 48
 font = pygame.font.Font(None, font_size)  # Use default font
 text_color = dark_gray
 heading_text = "Simple Box"
 content_text = "This is a simple box created with Pygame.  It has rounded corners and a subtle shadow."
 
-# Render text
+# Carregar as propriedades
 heading_surface = font.render(heading_text, True, text_color)
 heading_rect = heading_surface.get_rect(center=(width // 2, box_y + 50))
 
-# Content text properties
+# Propriedade dos conteudos da caixa
 content_font_size = 24
 content_font = pygame.font.Font(None, content_font_size)
 content_color = dark_gray
