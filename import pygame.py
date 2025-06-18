@@ -1,99 +1,55 @@
 import pygame
 
-# Iniciar
 pygame.init()
 
-# Dimensões
-width = 720
-height = 1280
-screen = pygame.display.set_mode((width, height))
+largura = 720
+altura = 1280
+tela = pygame.display.set_mode((largura, altura))
 
-# Colors
-white = (255, 255, 255)
-light_gray = (10,12,13)
-dark_gray = (80, 80, 80)
+branco = (222, 222, 222)    
+cinza_claro = (10, 12, 13)
 
-# Propriedades caixa
-box_x = 20
-box_y = 100
-box_width = 680
-box_height = 50
-box_color = light_gray
-opacity = 0.7
+class Caixa:
+    def __init__(self, largura=None, altura=None, cor=None, texto=None, x=None, y=None):
+        self.largura = largura
+        self.altura = altura
+        self.cor = cor
+        self.texto = texto
+        self.x = x
+        self.y = y
+    
+    def desenhar(self, tela):
+        # Desenhar o retângulo arredondado
+        pygame.draw.rect(tela, self.cor, (self.x, self.y, self.largura, self.altura), border_radius=10)
 
-# Arredondamento da caixa
-border_radius = 15  
-shadow_offset = 5
-shadow_color = dark_gray
+        # Renderizar o texto
+        fonte = pygame.font.SysFont("Arial", 24)
+        texto = fonte.render(self.texto, True, (0, 0, 0))
 
-# Propriedades do texto
-font_size = 48
-font = pygame.font.Font(None, font_size)  # Use default font
-text_color = dark_gray
-heading_text = "Simple Box"
-content_text = "This is a simple box created with Pygame.  It has rounded corners and a subtle shadow."
+        # Calcular a posição do texto para centralizá-lo
+        texto_x = self.x + (self.largura - texto.get_width()) / 2
+        texto_y = self.y + (self.altura - texto.get_height()) / 2
 
-# Carregar as propriedades
-heading_surface = font.render(heading_text, True, text_color)
-heading_rect = heading_surface.get_rect(center=(width // 2, box_y + 50))
+        # Desenhar o texto dentro da caixa
+        tela.blit(texto, (texto_x, texto_y))
 
-# Propriedade dos conteudos da caixa
-content_font_size = 24
-content_font = pygame.font.Font(None, content_font_size)
-content_color = dark_gray
-content_lines = []
-max_line_width = box_width - 40  # Margin inside the box
+caixa1 = Caixa(largura=600, cor=(200, 200, 200), texto= "O sistema absorve calor, mas não realiza trabalho", x=50, y=300, altura=100)
+caixa2 = Caixa(largura=600, cor=(200, 200, 200), texto="O sistema realiza trabalho, mas não há troca de calor com o ambiente", x=50, y=500, altura=100)
+caixa3 = Caixa(largura=600, cor=(200, 200, 200), texto="O sistema realiza calor e trabalho ao mesmo tempo", x=50, y=700, altura=100)
+caixa4 = Caixa(largura=600, cor=(200, 200, 200), texto="O sistema mantém a temperatura constante", x=50, y=900, altura=100)
 
-def wrap_text(text, font, max_width):
-    words = text.split()
-    lines = []
-    current_line = ""
-    for word in words:
-        test_line = current_line + word + " "
-        test_width, _ = font.size(test_line)
-        if test_width <= max_width:
-            current_line = test_line
-        else:
-            lines.append(current_line)
-            current_line = word + " "
-    lines.append(current_line)
-    return lines
+pergunta1 = Caixa(largura=300, cor=(222, 222, 222), texto="O que caracteriza um processo adiabático?", x=210, y=100, altura=100)
 
-content_lines = wrap_text(content_text, content_font, max_line_width)
-
-# Main game loop
 running = True
 while running:
-    # Event handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # Clear the screen
-    screen.fill(white)
-
-
-    # Draw shadow
-    shadow_rect = pygame.Rect(box_x + shadow_offset, box_y + shadow_offset, box_width, box_height)
-    pygame.draw.rect(screen, shadow_color, shadow_rect, border_radius=border_radius)
-
-    # Draw the box
-    box_rect = pygame.Rect(box_x, box_y, box_width, box_height)
-    pygame.draw.rect(screen, box_color, box_rect, border_radius=border_radius,)
-
-    # Draw heading
-    screen.blit(heading_surface, heading_rect)
-
-    # Draw content
-    y_offset = heading_rect.bottom + 20
-    for line in content_lines:
-        line_surface = content_font.render(line, True, content_color)
-        line_rect = line_surface.get_rect(center=(width // 2, y_offset))
-        screen.blit(line_surface, line_rect)
-        y_offset += content_font_size + 5  # Add spacing between lines
-
-    # Update the display
+    tela.fill(branco)
+    pergunta1.desenhar(tela)
+    caixa1.desenhar(tela)
+    caixa2.desenhar(tela)
+    caixa3.desenhar(tela)
+    caixa4.desenhar(tela)
     pygame.display.flip()
-
-# Quit Pygame
-pygame.quit()

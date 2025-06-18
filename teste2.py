@@ -6,43 +6,73 @@ largura = 720
 altura = 1280
 tela = pygame.display.set_mode((largura, altura))
 
-branco = (255, 0, 0)
+branco = (222, 222, 222)    
 cinza_claro = (10, 12, 13)
 
 class Caixa:
-    def __init__(self, largura=None, altura=None, cor=None, texto=None, arredondamento, x=None, y=None):
+    def __init__(self, largura=None, altura=None, cor=None, texto=None, x=None, y=None):
         self.largura = largura
         self.altura = altura
         self.cor = cor
         self.texto = texto
         self.x = x
         self.y = y
-        self.arredondamento = {
-            "tamanho_borda": 15,
-            "shadow_posicao": 5,
-            "cor_sombra": (80, 80, 80)
-        }
+    
+    def desenhar(self, tela):
+        # Desenhar o retângulo arredondado
+        pygame.draw.rect(tela, self.cor, (self.x, self.y, self.largura, self.altura), border_radius=10)
 
-caixa1 = Caixa(largura=680, cor=(0, 255, 0), texto="Caixa 1", x=20, y=100, altura=50,arredondamento)
+        # Renderizar o texto
+        fonte = pygame.font.SysFont("Arial", 24)
+        texto = fonte.render(self.texto, True, (0, 0, 0))
 
-# Main game loop
+        # Calcular a posição do texto para centralizá-lo
+        texto_x = self.x + (self.largura - texto.get_width()) / 2
+        texto_y = self.y + (self.altura - texto.get_height()) / 2
+
+        # Desenhar o texto dentro da caixa
+        tela.blit(texto, (texto_x, texto_y))
+
+    def clicado(self, x, y):
+        return self.x < x < self.x + self.largura and self.y < y < self.y + self.altura
+
+caixa1 = Caixa(largura=600, cor=(200, 200, 200), texto="A) O sistema absorve calor, mas não realiza trabalho.", x=210, y=300, altura=100)
+caixa2 = Caixa(largura=600, cor=(200, 200, 200), texto="B) O sistema realiza trabalho, mas não há troca de calor com o ambiente.", x=210, y=500, altura=100)
+caixa3 = Caixa(largura=600, cor=(200, 200, 200), texto=" C) O sistema realiza calor e trabalho ao mesmo tempo.", x=210, y=700, altura=100)
+caixa4 = Caixa(largura=600, cor=(200, 200, 200), texto=" D) O sistema mantém a temperatura constante.", x=210, y=900, altura=100)
+
+pergunta1 = Caixa(largura=300, cor=(222, 222, 222), texto="O que caracteriza um processo adiabático?", x=210, y=100, altura=100)
+
+resposta_correta = "B"
+
+selecionado = None
+
 running = True
 while running:
-    # Event handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if caixa1.clicado(event.pos[0], event.pos[1]):
+                selecionado = "A"
+            elif caixa2.clicado(event.pos[0], event.pos[1]):
+                selecionado = "B"
+            elif caixa3.clicado(event.pos[0], event.pos[1]):
+                selecionado = "C"
+            elif caixa4.clicado(event.pos[0], event.pos[1]):
+                selecionado = "D"
 
-    # Clear the screen
     tela.fill(branco)
+    pergunta1.desenhar(tela)
+    caixa1.desenhar(tela)
+    caixa2.desenhar(tela)
+    caixa3.desenhar(tela)
+    caixa4.desenhar(tela)
 
-    # Desenhar o retângulo
-    rect = pygame.Rect(caixa1.x, caixa1.y, caixa1.largura, caixa1.altura)
-    radius = caixa1.arredondamento["tamanho_borda"]
-
-    pygame.draw.rect(tela, caixa1.cor, rect, bordar=["tamanho_borda"])
+    if selecionado:
+        if selecionado == resposta_correta:
+            print("Resposta correta!")
+        else:
+            print("Resposta incorreta. A resposta correta é", resposta_correta)
 
     pygame.display.flip()
-
-
-#    radius = caixa1.arredondamento["tamanho_borda"]
