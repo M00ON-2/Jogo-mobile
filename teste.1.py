@@ -49,7 +49,7 @@ resposta_correta = "B"
 
 selecionado = None
 
-caixa_resposta = Caixa(largura=600, cor=(52, 142, 145), texto="O sistema realiza trabalho mas não há troca de calor com o ambiente", x=0, y=0, altura=50)
+caixa_resposta = Caixa(largura=600, cor=(52, 142, 145), texto="o sistema realiza trabalho, mas não há troca de calor com o ambiente", x=50, y=500, altura=100)
 
 running = True
 while running:
@@ -75,6 +75,6 @@ while running:
     caixa4.desenhar(tela)
 
     if selecionado == resposta_correta:
-        caixa_resposta.desenhar(tela)
+     caixa_resposta.desenhar(tela)
 
     pygame.display.flip()
