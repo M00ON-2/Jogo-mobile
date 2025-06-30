@@ -37,6 +37,7 @@ class Caixa:
         return self.x < x < self.x + self.largura and self.y < y < self.y + self.altura
 
 caixa_progressao = Caixa(largura = 1000, cor = (65, 67, 67), x = 0, y = 50, altura = 75)
+progresso = Caixa(largura = 250, cor =(52, 142, 145), x = 0, y = 50, altura = 75) 
 
 caixa1 = Caixa(largura=600, cor=(200, 200, 200), texto= "O sistema absorve calor, mas não realiza trabalho", x=50, y=300, altura=100)
 caixa2 = Caixa(largura=600, cor=(200, 200, 200), texto="o sistema realiza trabalho, mas não há troca de calor com o ambiente", x=50, y=500, altura=100)
@@ -75,6 +76,27 @@ while running:
     caixa4.desenhar(tela)
 
     if selecionado == resposta_correta:
-     caixa_resposta.desenhar(tela)
+        caixa_resposta.desenhar(tela)
+        progresso.desenhar(tela)
+    elif selecionado:
+        # Copiar as caixas originais e trocar a cor da errada
+        if selecionado == "A":
+            caixa1_erro = Caixa(largura=600, cor=(255, 83, 83), texto=caixa1.texto, x=50, y=300, altura=100)
+            caixa1_erro.desenhar(tela)
+        else:
+            caixa1.desenhar(tela)
 
+        if selecionado == "C":
+            caixa3_erro = Caixa(largura=600, cor=(255, 83, 83), texto=caixa3.texto, x=50, y=700, altura=100)
+            caixa3_erro.desenhar(tela)
+        else:
+            caixa3.desenhar(tela)
+
+        if selecionado == "D":
+            caixa4_erro = Caixa(largura=600, cor=(255, 83, 83), texto=caixa4.texto, x=50, y=900, altura=100)
+            caixa4_erro.desenhar(tela)
+        else:
+            caixa4.desenhar(tela)
+    
+        
     pygame.display.flip()
